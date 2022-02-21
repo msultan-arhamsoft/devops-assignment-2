@@ -33,3 +33,22 @@ docker container rm -f assignment-2
 docker run -d --name assignment-2 -v assignment-2:/usr/share/nginx/html/ nginx:latest
 
 ### Command to exec into the above container and replace the default index.html to a custom one, which says that â€œI am becoming a Docker Expertâ€ and it should be persisted for the next times ###
+- Exec into the container
+docker exec -it assignment-2 /bin/bash
+
+- Change the directory to update the file's content.
+cd /usr/share/nginx/html/
+
+- Edit the file to make the changes that will persist becuase of bind mounted:
+echo "<p> I am becoming a Docker Expert</p>" > index.html
+
+- Exit the container with the following command:
+exit
+
+- Remove the container:
+docker container rm -f assignment-2
+
+-Recreate the container and it should persist:
+docker run -d --name assignment-2 -p 9090:80 -v /var/www/html/DevOps/DockerData/Assignment2:/usr/share/nginx/html/ nginx
+
+- Visit the localhost:9090 and the persisted message will be shown as the default message.
